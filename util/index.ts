@@ -4,8 +4,8 @@ export async function fetchCars (filters: FilterProps ) {
     const {manufacturer, year, model, limit, fuel} = filters
 
     const headers = {
-        'x-rapidapi-key': '815d4f9151msh37bedeebeca1046p162a45jsn6818a7c20930',
-        'x-rapidapi-host': 'cars-by-api-ninjas.p.rapidapi.com'
+        'x-rapidapi-key': `${process.env.RAPID_API_KEY}`,
+        'x-rapidapi-host': `${process.env.RAPID_API_HOST}`
     }
     const response =  await fetch(
         `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`, {
@@ -48,3 +48,12 @@ export const calculateCarRent = (city_mpg: number, year: number) => {
   
     return rentalRatePerDay.toFixed(0);
   }; 
+
+
+  export const updateSearchParams = (type: string, value: string) =>{
+     //Get search paramerter
+     const searchParams = new URLSearchParams(window.location.search)
+     searchParams.set(type, value)
+     const newPathname = `${window.location.pathname}?${searchParams.toString()}`
+     return newPathname
+  }
